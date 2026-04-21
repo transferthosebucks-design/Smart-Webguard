@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreatGuard - Malicious Website Blocked</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .warning-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .warning-header {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .warning-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+
+        .warning-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .warning-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .warning-content {
+            padding: 30px;
+        }
+
+        .threat-details {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .threat-details h3 {
+            color: #92400e;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .threat-info {
+            display: grid;
+            gap: 12px;
+        }
+
+        .threat-info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #fde68a;
+        }
+
+        .threat-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .threat-info-label {
+            font-weight: 600;
+            color: #78350f;
+        }
+
+        .threat-info-value {
+            color: #92400e;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-all;
+        }
+
+        .risk-score {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .score-bar {
+            flex: 1;
+            height: 8px;
+            background: #fde68a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: #dc2626;
+            transition: width 0.5s ease-out;
+        }
+
+        .indicators {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .indicators h4 {
+            color: #374151;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .indicator-list {
+            list-style: none;
+        }
+
+        .indicator-item {
+            padding: 5px 0;
+            color: #6b7280;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .indicator-item::before {
+            content: "⚠️";
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
+        .btn-safe {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-safe:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .footer-info {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .risk-critical { color: #dc2626; }
+        .risk-high { color: #ea580c; }
+        .risk-medium { color: #d97706; }
+        .risk-low { color: #059669; }
+
+        @media (max-width: 640px) {
+            .warning-container {
+                margin: 10px;
+            }
+            
+            .warning-header {
+                padding: 20px;
+            }
+            
+            .warning-title {
+                font-size: 24px;
+            }
+            
+            .warning-content {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="warning-container">
+        <div class="warning-header">
+            <div class="warning-icon">🛡️</div>
+            <h1 class="warning-title">Malicious Website Blocked</h1>
+            <p class="warning-subtitle">ThreatGuard has protected you from a dangerous website</p>
+        </div>
+
+        <div class="warning-content">
+            <div class="threat-details">
+                <h3>🚨 Threat Details</h3>
+                <div class="threat-info">
+                    <div class="threat-info-item">
+                        <span class="threat-info-label">Blocked URL:</span>
+                        <span class="threat-info-value" id="blocked-url">Loading...</span>
+                    </div>
+                    <div class="threat-info-item">
+                        <span class="threat-info-label">Risk Level:</span>
+                        <span class="threat-info-value" id="risk-level">Loading...</span>
+                    </div>
+                    <div class="threat-info-item">
+                        <span class="threat-info-label">Threat Score:</span>
+                        <div class="risk-score">
+                            <div class="score-bar">
+                                <div class="score-fill" id="score-fill"></div>
+                            </div>
+                            <span id="threat-score">0/100</span>
+                        </div>
+                    </div>
+                    <div class="threat-info-item">
+                        <span class="threat-info-label">Category:</span>
+                        <span class="threat-info-value" id="threat-category">Loading...</span>
+                    </div>
+                    <div class="threat-info-item">
+                        <span class="threat-info-label">Detection Time:</span>
+                        <span class="threat-info-value" id="detection-time">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="indicators" id="indicators-section">
+                <h4>🔍 Threat Indicators</h4>
+                <ul class="indicator-list" id="indicator-list">
+                    <li class="indicator-item">Analyzing threat indicators...</li>
+                </ul>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-safe" onclick="goBack()">
+                    ← Go Back to Safety
+                </button>
+                <button class="btn btn-secondary" onclick="ignoreWarning()">
+                    ⚠️ Ignore Warning
+                </button>
+                <button class="btn btn-danger" onclick="reportFalsePositive()">
+                    📝 Report False Positive
+                </button>
+            </div>
+
+            <div class="footer-info">
+                <p>🛡️ Protected by ThreatGuard Real-time Security</p>
+                <p>This website was automatically blocked for your safety</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let threatData = null;
+
+        // Parse URL parameters to get threat data
+        function parseThreatData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data');
+            
+            if (dataParam) {
+                try {
+                    threatData = JSON.parse(decodeURIComponent(dataParam));
+                    displayThreatData();
+                } catch (error) {
+                    console.error('Error parsing threat data:', error);
+                    displayError();
+                }
+            } else {
+                displayError();
+            }
+        }
+
+        // Display threat data on the page
+        function displayThreatData() {
+            if (!threatData) return;
+
+            // Set basic information
+            document.getElementById('blocked-url').textContent = truncateURL(threatData.blockedUrl);
+            document.getElementById('risk-level').textContent = threatData.riskLevel.toUpperCase();
+            document.getElementById('threat-score').textContent = `${threatData.threatScore}/100`;
+            document.getElementById('threat-category').textContent = threatData.category;
+            
+            // Set detection time
+            if (threatData.timestamp) {
+                const time = new Date(threatData.timestamp);
+                document.getElementById('detection-time').textContent = time.toLocaleString();
+            }
+
+            // Set risk level styling
+            const riskLevelElement = document.getElementById('risk-level');
+            riskLevelElement.className = `threat-info-value risk-${threatData.riskLevel.toLowerCase()}`;
+
+            // Set score bar
+            const scoreFill = document.getElementById('score-fill');
+            scoreFill.style.width = `${Math.min(100, threatData.threatScore)}%`;
+            
+            // Set score bar color based on risk level
+            if (threatData.riskLevel === 'critical') {
+                scoreFill.style.background = '#dc2626';
+            } else if (threatData.riskLevel === 'high') {
+                scoreFill.style.background = '#ea580c';
+            } else if (threatData.riskLevel === 'medium') {
+                scoreFill.style.background = '#d97706';
+            } else {
+                scoreFill.style.background = '#059669';
+            }
+
+            // Display indicators
+            displayIndicators(threatData.indicators || []);
+        }
+
+        // Display threat indicators
+        function displayIndicators(indicators) {
+            const indicatorList = document.getElementById('indicator-list');
+            
+            if (indicators.length === 0) {
+                indicatorList.innerHTML = '<li class="indicator-item">No specific indicators detected</li>';
+                return;
+            }
+
+            indicatorList.innerHTML = indicators.map(indicator => 
+                `<li class="indicator-item">${indicator}</li>`
+            ).join('');
+        }
+
+        // Truncate long URLs for display
+        function truncateURL(url) {
+            if (url.length <= 60) return url;
+            return url.substring(0, 60) + '...';
+        }
+
+        // Display error message
+        function displayError() {
+            document.querySelector('.warning-content').innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <h2 style="color: #dc2626; margin-bottom: 20px;">⚠️ Error Loading Threat Data</h2>
+                    <p style="color: #6b7280; margin-bottom: 30px;">Unable to load threat analysis data.</p>
+                    <button class="btn btn-safe" onclick="goBack()">← Go Back to Safety</button>
+                </div>
+            `;
+        }
+
+        // Go back to previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        // Ignore warning and proceed (risky)
+        function ignoreWarning() {
+            if (confirm('⚠️ Warning: This website has been identified as malicious. Proceeding could put your security at risk. Are you sure you want to continue?')) {
+                if (threatData && threatData.blockedUrl) {
+                    window.location.href = threatData.blockedUrl;
+                }
+            }
+        }
+
+        // Report false positive
+        function reportFalsePositive() {
+            const message = `False Positive Report:\n\nURL: ${threatData?.blockedUrl}\nThreat Score: ${threatData?.threatScore}\nRisk Level: ${threatData?.riskLevel}\nCategory: ${threatData?.category}\n\nPlease review this classification.`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(message).then(() => {
+                alert('📋 False positive report copied to clipboard. You can send this to the security team for review.');
+            }).catch(() => {
+                // Fallback: Show alert with report details
+                alert(message);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', parseThreatData);
+
+        // Prevent right-click context menu (security measure)
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        // Prevent keyboard shortcuts that might bypass security
+        document.addEventListener('keydown', (e) => {
+            // Prevent Ctrl+U (view source)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+            // Prevent F12 (developer tools)
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

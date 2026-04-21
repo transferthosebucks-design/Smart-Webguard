@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "ThreatGuard - Real-time Malicious Website Protection",
+  "version": "1.0.0",
+  "description": "Advanced AI-powered real-time detection and blocking of malicious websites",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "scripting",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background-simple.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-clean.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ThreatGuard Protection"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["warning.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

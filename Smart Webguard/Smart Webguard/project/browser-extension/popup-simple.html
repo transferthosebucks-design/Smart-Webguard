@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreatGuard - Simple Enhanced</title>
+    <style>
+        body {
+            width: 350px;
+            min-height: 400px;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            margin: 3px 0 0 0;
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 15px;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .section h3 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 11px;
+        }
+        
+        .status-value {
+            font-weight: 600;
+            color: #10b981;
+        }
+        
+        .threat-item {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;
+        }
+        
+        .threat-url {
+            font-size: 10px;
+            font-weight: 600;
+            color: #ef4444;
+            word-break: break-all;
+            margin-bottom: 3px;
+        }
+        
+        .threat-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .empty {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            opacity: 0.6;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 15px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ ThreatGuard</h1>
+        <p>Simple Enhanced Protection</p>
+    </div>
+    
+    <div class="content">
+        <!-- Status -->
+        <div class="section">
+            <h3>📊 Status</h3>
+            <div class="status-item">
+                <span>Protection</span>
+                <span class="status-value">ACTIVE</span>
+            </div>
+            <div class="status-item">
+                <span>Threats Blocked</span>
+                <span class="status-value" id="threatCount">0</span>
+            </div>
+        </div>
+        
+        <!-- Threat History -->
+        <div class="section">
+            <h3>🕒 Recent Threats</h3>
+            <div id="threatHistory">
+                <div class="loading">Loading...</div>
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <button class="btn btn-primary" id="clearHistory">Clear History</button>
+        <button class="btn btn-secondary" id="refresh">Refresh</button>
+    </div>
+    
+    <script src="popup-simple.js"></script>
+</body>
+</html>

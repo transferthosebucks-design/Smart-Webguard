@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "ThreatGuard - Test Version",
+  "version": "0.1.0",
+  "description": "Test version to check what's working",
+  "permissions": [
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background-basic.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["test-manual.js", "content-basic.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "ThreatGuard Test"
+  }
+}

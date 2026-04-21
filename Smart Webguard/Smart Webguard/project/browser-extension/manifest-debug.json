@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "ThreatGuard - Debug Mode",
+  "version": "2.0.1",
+  "description": "Debug version - Enhanced ThreatGuard with step-by-step testing",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "scripting",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background-enhanced.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["debug-enhanced.js", "content-enhanced.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup-enhanced.html",
+    "default_title": "ThreatGuard Debug",
+    "default_icon": {
+      "16": "icons/icon16-green.png",
+      "48": "icons/icon48-green.png",
+      "128": "icons/icon128-green.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["warning.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "icons/icon16-green.png",
+    "48": "icons/icon48-green.png",
+    "128": "icons/icon128-green.png"
+  }
+}
