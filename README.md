@@ -18,7 +18,7 @@ Backend: Python / Node.js (update based on your project)
 Libraries/Tools: (Add what you used, e.g., scikit-learn, Flask, etc.)
 📦 Installation
 # Clone the repository
-git clone https://github.com/your-username/smart-webguard.git
+git clone https://github.com/transferthosebucks-design/smart-webguard.git
 
 # Navigate to the project folder
 cd smart-webguard
